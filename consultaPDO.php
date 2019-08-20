@@ -10,7 +10,8 @@ $busca=$_GET["buscar"];
 try{
 	
 	$base=new PDO('mysql:host=localhost;dbname=pruebas','root','');
-	
+	$base->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
 	$base->exec("set character set utf8");
 	$sql="select nombreartículo,sección,precio,paísdeorigen from productos where nombreartículo= ?";
 	//echo "conexion OK";
@@ -26,7 +27,8 @@ try{
     }
 	catch(Exception $e)
 	{
-        die('Error: ' . $e->GetMessage());
+		//die('Error: ' . $e->GetMessage());
+		echo "Codigo del error: " . $e->getCode();//genera un codigo de error en el caso de que la tabla no exista
 	}finally
 	{
         $base=null;
